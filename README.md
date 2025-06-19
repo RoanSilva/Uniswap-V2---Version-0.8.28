@@ -1,4 +1,4 @@
-# Uniswap V2
+# Uniswap V2 - Version 0.8.28 Completed Compile
 
 [![Actions Status](https://github.com/Uniswap/uniswap-v2-periphery/workflows/CI/badge.svg)](https://github.com/Uniswap/uniswap-v2-periphery/actions)
 [![npm](https://img.shields.io/npm/v/@uniswap/v2-periphery?style=flat-square)](https://npmjs.com/package/@uniswap/v2-periphery)
@@ -13,15 +13,15 @@ The following assumes the use of `node@>=10`.
 
 ## Install Dependencies
 
-`yarn`
+`yarn` \n
 `hardhat`
 
 ## Compile Contracts
 
-`yarn compile`
+`yarn compile` \n
 `npx hardhat compile compile`
 
 ## Run Tests
 
-`yarn test`
+`yarn test` \n
 `npx hardhat test`
