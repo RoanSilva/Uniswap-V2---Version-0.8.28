@@ -22,9 +22,11 @@ Como usar
 1. Clone os repositórios:
 
    git clone https://github.com/Uniswap/v2-core.git
+   
    git clone https://github.com/Uniswap/v2-periphery.git
    
    cd v2-core
+   
    cd v2-periphery
 
 3. Atualize pelos novos contratos compativeis com a versão Solidity 0.8.28
