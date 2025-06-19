@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-Society - Liquidation Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #888;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: #ff6b6b;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.1);
+        }
+
+        .card h2 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .exchange-card {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(254, 202, 87, 0.1));
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exchange-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.8s ease;
+        }
+
+        .exchange-card:hover::before {
+            animation: shimmer 2s infinite;
+        }
+
+        .exchange-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .exchange-logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .exchange-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+
+        .exchange-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-active {
+            background: rgba(72, 219, 251, 0.2);
+            color: #48dbfb;
+            border: 1px solid #48dbfb;
+        }
+
+        .status-pending {
+            background: rgba(254, 202, 87, 0.2);
+            color: #feca57;
+            border: 1px solid #feca57;
+        }
+
+        .status-inactive {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+        }
+
+        .liquidation-progress {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progress-shine 2s infinite;
+        }
+
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4757, #ff3838);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #2ed573, #1dd1a1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-item {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .order-book {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .order-row:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 5px;
+        }
+
+        .buy-order {
+            border-left: 3px solid #2ed573;
+        }
+
+        .sell-order {
+            border-left: 3px solid #ff4757;
+        }
+
+        .warning-box {
+            background: rgba(254, 202, 87, 0.1);
+            border: 1px solid #feca57;
+            border-left: 4px solid #feca57;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box h3 {
+            color: #feca57;
+            margin-bottom: 10px;
+        }
+
+        .strategy-timeline {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #ff6b6b;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-step:hover {
+            background: rgba(255, 107, 107, 0.1);
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            background: #ff6b6b;
+            color: #000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 20px;
+        }
+
+        .step-content h4 {
+            color: #ff6b6b;
+            margin-bottom: 8px;
+        }
+
+        .live-feed {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .feed-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #48dbfb;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .feed-time {
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .price-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+
+        .price-usdt {
+            color: #feca57;
+        }
+
+        .price-bnb {
+            color: #ff6b6b;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 LIQUIDATION CONTROL CENTER</h1>
+            <p>Estratégia de Saída - F-Society Token</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">🎯 Overview</button>
+            <button class="tab-btn" onclick="showTab('exchanges')">🏦 Exchanges</button>
+            <button class="tab-btn" onclick="showTab('strategy')">📈 Estratégia</button>
+            <button class="tab-btn" onclick="showTab('execution')">⚡ Execução</button>
+            <button class="tab-btn" onclick="showTab('monitoring')">📊 Monitoramento</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="card">
+                <h2>🎯 Status da Liquidação</h2>
+                
+                <div class="liquidation-progress">
+                    <h3>Progresso Geral da Liquidação</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%" id="overall-progress"></div>
+                    </div>
+                    <p>Fase Atual: <span id="current-phase">Preparação</span></p>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-value" id="tokens-sold">0</div>
+                        <div class="metric-label">Tokens Vendidos</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="usdt-received">$0</div>
+                        <div class="metric-label">USDT Recebido</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="bnb-received">0</div>
+                        <div class="metric-label">BNB Recebido</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="completion-rate">0%</div>
+                        <div class="metric-label">Taxa de Conclusão</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>💎 Holdings Atuais</h2>
+                <div class="price-display">
+                    <div class="price-usdt">SPB: $<span id="spb-balance">850,000</span></div>
+                    <div class="price-bnb">BPS: $<span id="bps-balance">750,000</span></div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ Aviso Importante</h3>
+                <p>Esta é uma simulação educacional. Operações reais de liquidação devem seguir todas as regulamentações aplicáveis e considerar os riscos envolvidos.</p>
+            </div>
+        </div>
+
+        <!-- Exchanges Tab -->
+        <div id="exchanges" class="tab-content">
+            <div class="card">
+                <h2>🏦 Exchanges Disponíveis</h2>
+                
+                <div class="grid">
+                    <div class="exchange-card">
+                        <div class="exchange-logo">🅱️</div>
+                        <div class="exchange-name">Binance</div>
+                        <div class="exchange-status status-active">Ativo</div>
+                        <p>Volume: $2.5B/dia</p>
+                        <p>Taxa: 0.1%</p>
+                        <button class="btn" onclick="connectExchange('binance')">Conectar</button>
+                    </div>
+
+                    <div class="exchange-card">
+                        <div class="exchange-logo">🥞</div>
+                        <div class="exchange-name">PancakeSwap</div>
+                        <div class="exchange-status status-active">Ativo</div>
+                        <p>Volume: $150M/dia</p>
+                        <p>Taxa: 0.25%</p>
+                        <button class="btn" onclick="connectExchange('pancake')">Conectar</button>
+                    </div>
+
+                    <div class="exchange-card">
+                        <div class="exchange-logo">🔥</div>
+                        <div class="exchange-name">KuCoin</div>
+                        <div class="exchange-status status-pending">Pendente</div>
+                        <p>Volume: $800M/dia</p>
+                        <p>Taxa: 0.1%</p>
+                        <button class="btn" onclick="connectExchange('kucoin')">Listar</button>
+                    </div>
+
+                    <div class="exchange-card">
+                        <div class="exchange-logo">🌊</div>
+                        <div class="exchange-name">Uniswap</div>
+                        <div class="exchange-status status-active">Ativo</div>
+                        <p>Volume: $1.2B/dia</p>
+                        <p>Taxa: 0.3%</p>
+                        <button class="btn" onclick="connectExchange('uniswap')">Conectar</button>
+                    </div>
+
+                    <div class="exchange-card">
+                        <div class="exchange-logo">📈</div>
+                        <div class="exchange-name">Gate.io</div>
+                        <div class="exchange-status status-pending">Pendente</div>
+                        <p>Volume: $400M/dia</p>
+                        <p>Taxa: 0.2%</p>
+                        <button class="btn" onclick="connectExchange('gate')">Listar</button>
+                    </div>
+
+                    <div class="exchange-card">
+                        <div class="exchange-logo">🔴</div>
+                        <div class="exchange-name">MEXC</div>
+                        <div class="exchange-status status-inactive">Inativo</div>
+                        <p>Volume: $200M/dia</p>
+                        <p>Taxa: 0.2%</p>
+                        <button class="btn" onclick="connectExchange('mexc')">Solicitar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategy Tab -->
+        <div id="strategy" class="tab-content">
+            <div class="card">
+                <h2>📈 Estratégia de Liquidação</h2>
+                
+                <div class="strategy-timeline">
+                    <div class="timeline-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Preparação do Mercado</h4>
+                            <p>Manter volume de trading alto e preços estáveis antes da liquidação</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Liquidação Gradual - Fase 1</h4>
+                            <p>Vender 30% dos tokens SPB em pequenos lotes para USDT</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Diversificação - Fase 2</h4>
+                            <p>Converter 40% dos tokens BPS para BNB em exchanges menores</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Liquidação Final - Fase 3</h4>
+                            <p>Vender holdings restantes distribuindo entre múltiplas exchanges</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Consolidação</h4>
+                            <p>Converter todos os ativos para stablecoins (USDT/BUSD)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Distribuição de Liquidação</h2>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-value">30%</div>
+                        <div class="metric-label">Binance/PancakeSwap</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">25%</div>
+                        <div class="metric-label">Uniswap/Sushiswap</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">20%</div>
+                        <div class="metric-label">KuCoin/Gate.io</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">15%</div>
+                        <div class="metric-label">MEXC/OTC</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">10%</div>
+                        <div class="metric-label">Reserva/Emergência</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Execution Tab -->
+        <div id="execution" class="tab-content">
+            <div class="card">
+                <h2>⚡ Centro de Execução</h2>
+                
+                <div class="order-book">
+                    <h3>📋 Ordens Ativas</h3>
+                    
+                    <div class="order-row sell-order">
+                        <span>Vender SPB</span>
+                        <span>50,000 SPB</span>
+                        <span>$0.0085</span>
+                        <span class="status-pending">Pendente</span>
+                    </div>
+                    
+                    <div class="order-row sell-order">
+                        <span>Vender BPS</span>
+                        <span>25,000 BPS</span>
+                        <span>$0.0024</span>
+                        <span class="status-active">Ativo</span>
+                    </div>
+                    
+                    <div class="order-row buy-order">
+                        <span>Comprar USDT</span>
+                        <span>$425</span>
+                        <span>1.00</span>
+                        <span class="status-active">Ativo</span>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card">
+                        <h3>🎯 Execução Manual</h3>
+                        <button class="btn" onclick="executeSell('spb', 10000)">Vender 10k SPB</button>
+                        <button class="btn" onclick="executeSell('bps', 5000)">Vender 5k BPS</button>
+                        <button class="btn btn-danger" onclick="emergencyDump()">DUMP Emergência</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>🤖 Execução Automática</h3>
+                        <button class="btn btn-success" onclick="startAutoSell()">Iniciar Auto-Sell</button>
+                        <button class="btn" onclick="pauseAutoSell()">Pausar</button>
+                        <button class="btn btn-danger" onclick="stopAutoSell()">Parar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring Tab -->
+        <div id="monitoring" class="tab-content">
+            <div class="card">
+                <h2>📊 Monitoramento em Tempo Real</h2>
+                
+                <div class="live-feed" id="live-feed">
+                    <div class="feed-item">
+                        <strong>Sistema Iniciado</strong>
+                        <div class="feed-time">Aguardando ordens...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>📈 Preços Atuais</h3>
+                    <div class="price-display">
+                        <div class="price-usdt">SPB: $<span id="current-spb-price">0.0082</span></div>
+                        <div class="price-bnb">BPS: $<span id="current-bps-price">0.0023</span></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>💰 Resultado Financeiro</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <div class="metric-value" id="total-profit">$0</div>
+                            <div class="metric-label">Lucro Total</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="roi-percentage">0%</div>
+                            <div class="metric-label">ROI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let liquidationActive = false;
+        let autoSellActive = false;
+        let totalSold = 0;
+        let totalReceived = 0;
+        let currentPhase = "Preparação";
+
+        // Tab functionality
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Exchange connection simulation
+        function connectExchange(exchange) {
+            addFeedItem(`🔗 Conectando à ${exchange}...`);
+            setTimeout(() => {
+                addFeedItem(`✅ Conectado à ${exchange} com sucesso!`);
+            }, 2000);
+        }
+
+        // Sell execution simulation
+        function executeSell(token, amount) {
+            if (!liquidationActive) {
+                startLiquidation();
+            }
+            
+            const price = token === 'spb' ? 0.0082 : 0.0023;
+            const value = amount * price;
+            
+            addFeedItem(`💰 Vendendo ${amount} ${token.toUpperCase()} por $${value.toFixed(2)}`);
+            
+            totalSold += amount;
+            totalReceived += value;
+            
+            updateMetrics();
+            updateProgress();
+            
+            setTimeout(() => {
+                addFeedItem(`✅ Venda executada: ${amount} ${token.toUpperCase()} → $${value.toFixed(2)} USDT`);
+            }, 3000);
+        }
+
+        // Emergency dump simulation
+        function emergencyDump() {
+            if (confirm('⚠️ ATENÇÃO: Executar DUMP de emergência? Esta ação não pode ser desfeita!')) {
+                addFeedItem('🚨 DUMP DE EMERGÊNCIA ATIVADO!');
+                addFeedItem('💥 Vendendo todos os tokens ao preço de mercado...');
+                
+                setTimeout(() => {
+                    totalSold = 1500000;
+                    totalReceived = 8500;
+                    updateMetrics();
+                    updateProgress();
+                    addFeedItem('✅ DUMP concluído. Todos os tokens foram liquidados.');
+                    currentPhase = "Concluído";
+                    document.getElementById('current-phase').textContent = currentPhase;
+                }, 5000);
+            }
+        }
+
+        // Auto-sell functionality
+        function startAutoSell() {
+            autoSellActive = true;
+            addFeedItem('🤖 Auto-Sell ativado. Executando ordens automaticamente...');
+            
+            if (!liquidationActive) {
+                startLiquidation();
+            }
+            
+            autoSellLoop();
+        }
+
+        function pauseAutoSell() {
+            autoSellActive = false;
+            addFeedItem('⏸️ Auto-Sell pausado.');
+        }
+
+        function stopAutoSell() {
+            autoSellActive = false;
+            addFeedItem('⏹️ Auto-Sell interrompido.');
+        }
+
+        function autoSellLoop() {
+            if (!autoSellActive) return;
+            
+            const randomAmount = Math.floor(Math.random() * 10000) + 1000;
+            const randomToken = Math

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F-Society Token - Marketing Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(45deg, #00ff41, #00d4aa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #888;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: #00ff41;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.1);
+        }
+
+        .card h2 {
+            color: #00ff41;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 212, 170, 0.1));
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00ff41;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #00ff41, #00d4aa);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 55%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: rgba(0, 255, 65, 0.3);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: rgba(0, 255, 65, 0.3);
+        }
+
+        .timeline-date {
+            color: #00ff41;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #00ff41, #00d4aa);
+            border: none;
+            color: #000;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 255, 65, 0.4);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-link:hover {
+            background: #00ff41;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .price-chart {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .price-display {
+            font-size: 3rem;
+            color: #00ff41;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .change-positive {
+            color: #00ff41;
+        }
+
+        .change-negative {
+            color: #ff4444;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: calc(100% - 40px);
+                left: 40px !important;
+                text-align: left !important;
+            }
+            
+            .timeline-content::before {
+                left: -20px !important;
+                border-right-color: rgba(0, 255, 65, 0.3) !important;
+                border-left-color: transparent !important;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 F-SOCIETY TOKEN 🔥</h1>
+            <p>A Revolução Financeira Descentralizada Chegou</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="tab-btn" onclick="showTab('metrics')">📈 Métricas</button>
+            <button class="tab-btn" onclick="showTab('roadmap')">🚀 Roadmap</button>
+            <button class="tab-btn" onclick="showTab('marketing')">💎 Marketing</button>
+            <button class="tab-btn" onclick="showTab('social')">🌐 Social</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="card">
+                <h2>🎯 Visão Geral do Projeto</h2>
+                <p>O F-Society Token representa uma nova era de tokens descentralizados com sistema de taxas inteligente e pool de liquidez próprio. Nossos tokens SPB e BPS estão revolucionando o mercado DeFi com tecnologia de ponta.</p>
+                
+                <div class="price-chart">
+                    <h3>💰 Preço Atual dos Tokens</h3>
+                    <div class="price-display" id="spb-price">$0.0000</div>
+                    <p>SPB Token <span class="change-positive" id="spb-change">+0.00%</span></p>
+                    <div class="price-display" id="bps-price">$0.0000</div>
+                    <p>BPS Token <span class="change-positive" id="bps-change">+0.00%</span></p>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="metric-card">
+                    <div class="metric-value" id="total-supply">2M</div>
+                    <div class="metric-label">Total Supply</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="holders">0</div>
+                    <div class="metric-label">Holders</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="market-cap">$0</div>
+                    <div class="metric-label">Market Cap</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="liquidity">$0</div>
+                    <div class="metric-label">Liquidez</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metrics Tab -->
+        <div id="metrics" class="tab-content">
+            <div class="card">
+                <h2>📊 Métricas de Crescimento</h2>
+                <div class="grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="daily-volume">$0</div>
+                        <div class="metric-label">Volume 24h</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="weekly-growth">+0%</div>
+                        <div class="metric-label">Crescimento 7d</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="transactions">0</div>
+                        <div class="metric-label">Transações</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">1%</div>
+                        <div class="metric-label">Taxa de Transação</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Metas de Crescimento</h2>
+                <p><strong>Semana 1:</strong> 100 holders, $10k market cap</p>
+                <p><strong>Semana 2:</strong> 500 holders, $50k market cap</p>
+                <p><strong>Mês 1:</strong> 1000 holders, $100k market cap</p>
+                <p><strong>Mês 3:</strong> 5000 holders, $1M market cap</p>
+            </div>
+        </div>
+
+        <!-- Roadmap Tab -->
+        <div id="roadmap" class="tab-content">
+            <div class="card">
+                <h2>🚀 Roadmap de Desenvolvimento</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">✅ ETAPA 1 - CONCLUÍDA</div>
+                            <h3>Tokens Personalizados</h3>
+                            <p>Criação dos tokens SPB e BPS com sistema de taxas de 1% e funcionalidades avançadas.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">🔄 ETAPA 2 - EM ANDAMENTO</div>
+                            <h3>Pool de Liquidez</h3>
+                            <p>Implementação do fork Uniswap V2 e criação do par SPB/BPS com liquidez inicial.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">⏳ ETAPA 3 - PLANEJADA</div>
+                            <h3>Bots de Trading</h3>
+                            <p>Desenvolvimento de bots automatizados para simulação de volume e valorização.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-date">🎯 ETAPA 4 - ATUAL</div>
+                            <h3>Marketing & Crescimento</h3>
+                            <p>Estratégia de marketing agressiva, listagens em exchanges e crescimento da comunidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marketing Tab -->
+        <div id="marketing" class="tab-content">
+            <div class="card">
+                <h2>💎 Estratégia de Marketing</h2>
+                
+                <h3>🔥 Narrativa Principal</h3>
+                <p><strong>"A Revolução DeFi que você não pode perder!"</strong></p>
+                <ul style="margin: 20px 0; padding-left: 20px;">
+                    <li>🚀 Tokens inovadores com sistema de taxas que beneficia holders</li>
+                    <li>💰 Pool de liquidez próprio com yields atrativos</li>
+                    <li>📈 Crescimento orgânico e sustentável</li>
+                    <li>🔐 Segurança máxima com contratos auditados</li>
+                    <li>🌟 Equipe experiente e transparente</li>
+                </ul>
+
+                <h3>📱 Canais de Marketing</h3>
+                <div class="grid">
+                    <div class="metric-card">
+                        <h4>Telegram</h4>
+                        <p>Grupo oficial com atualizações diárias e suporte</p>
+                        <button class="btn" onclick="window.open('https://t.me/fsocietytoken')">Entrar no Grupo</button>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Twitter/X</h4>
+                        <p>Atualizações, análises e interação com a comunidade</p>
+                        <button class="btn" onclick="window.open('https://twitter.com/fsocietytoken')">Seguir</button>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Discord</h4>
+                        <p>Comunidade ativa com salas especializadas</p>
+                        <button class="btn" onclick="window.open('https://discord.gg/fsociety')">Entrar</button>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Reddit</h4>
+                        <p>Discussões técnicas e análises profundas</p>
+                        <button class="btn" onclick="window.open('https://reddit.com/r/fsocietytoken')">Participar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Campanhas de Marketing</h2>
+                
+                <h3>📈 Fase 1: Awareness (Semanas 1-2)</h3>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Lançamento em redes sociais</li>
+                    <li>Airdrops para early adopters</li>
+                    <li>Parcerias com influencers cripto</li>
+                    <li>Postagens em fóruns especializados</li>
+                </ul>
+
+                <h3>🚀 Fase 2: Growth (Semanas 3-4)</h3>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Listagem em CoinGecko/CoinMarketCap</li>
+                    <li>AMAs com a comunidade</li>
+                    <li>Competições e giveaways</li>
+                    <li>Partnerships com outros projetos</li>
+                </ul>
+
+                <h3>💎 Fase 3: Expansion (Mês 2+)</h3>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Listagem em exchanges menores</li>
+                    <li>Marketing pago (Google Ads, Facebook)</li>
+                    <li>Eventos e conferências</li>
+                    <li>Expansão internacional</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Social Tab -->
+        <div id="social" class="tab-content">
+            <div class="card">
+                <h2>🌐 Presença Social</h2>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">📱 Telegram</a>
+                    <a href="#" class="social-link">🐦 Twitter</a>
+                    <a href="#" class="social-link">💬 Discord</a>
+                    <a href="#" class="social-link">📺 YouTube</a>
+                    <a href="#" class="social-link">📰 Medium</a>
+                    <a href="#" class="social-link">🤖 Reddit</a>
+                </div>
+
+                <h3>📊 Métricas Sociais</h3>
+                <div class="grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="telegram-members">0</div>
+                        <div class="metric-label">Membros Telegram</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="twitter-followers">0</div>
+                        <div class="metric-label">Seguidores Twitter</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="discord-members">0</div>
+                        <div class="metric-label">Membros Discord</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="reddit-members">0</div>
+                        <div class="metric-label">Membros Reddit</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📝 Conteúdo Sugerido</h2>
+                
+                <h3>🔥 Posts Diários</h3>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>"🚀 SPB Token subiu +15% nas últimas 24h! O momentum está apenas começando! #FSociety #DeFi"</li>
+                    <li>"💎 Novos holders se juntando à família F-Society! Bem-vindos à revolução! #CryptoGems"</li>
+                    <li>"📈 Volume de trading aumentou 300%! A comunidade está crescendo forte! #BullRun"</li>
+                    <li>"🔐 Lembrete: Nossos contratos são 100% auditados e seguros! #SafeInvesting"</li>
+                </ul>
+
+                <h3>📊 Análises Técnicas</h3>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>Gráficos de preço com indicadores técnicos</li>
+                    <li>Análise de volume e liquidez</li>
+                    <li>Comparações com outros tokens similares</li>
+                    <li>Projeções de crescimento baseadas em dados</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Simulate price updates
+        function updatePrices() {
+            const spbPrice = (Math.random() * 0.01 + 0.001).toFixed(6);
+            const bpsPrice = (Math.random() * 0.001 + 0.0001).toFixed(6);
+            const spbChange = (Math.random() * 20 - 10).toFixed(2);
+            const bpsChange = (Math.random() * 15 - 7.5).toFixed(2);
+
+            document.getElementById('spb-price').textContent = `$${spbPrice}`;
+            document.getElementById('bps-price').textContent = `$${bpsPrice}`;
+            
+            const spbChangeEl = document.getElementById('spb-change');
+            const bpsChangeEl = document.getElementById('bps-change');
+            
+            spbChangeEl.textContent = `${spbChange > 0 ? '+' : ''}${spbChange}%`;
+            bpsChangeEl.textContent = `${bpsChange > 0 ? '+' : ''}${bpsChange}%`;
+            
+            spbChangeEl.className = spbChange > 0 ? 'change-positive' : 'change-negative';
+            bpsChangeEl.className = bpsChange > 0 ? 'change-positive' : 'change-negative';
+        }
+
+        // Simulate growing metrics
+        function updateMetrics() {
+            const holders = Math.floor(Math.random() * 100 + 50);
+            const marketCap = Math.floor(Math.random() * 50000 + 10000);
+            const liquidity = Math.floor(Math.random() * 20000 + 5000);
+            const dailyVolume = Math.floor(Math.random() * 10000 + 1000);
+            const weeklyGrowth = (Math.random() * 50 + 10).toFixed(1);
+            const transactions = Math.floor(Math.random() * 500 + 100);
+
+            document.getElementById('holders').textContent = holders;
+            document.getElementById('market-cap').textContent = `$${marketCap.toLocaleString()}`;
+            document.getElementById('liquidity').textContent = `$${liquidity.toLocaleString()}`;
+            document.getElementById('daily-volume').textContent = `$${dailyVolume.toLocaleString()}`;
+            document.getElementById('weekly-growth').textContent = `+${weeklyGrowth}%`;
+            document.getElementById('transactions').textContent = transactions;
+        }
+
+        // Simulate social metrics
+        function updateSocialMetrics() {
+            const telegramMembers = Math.floor(Math.random() * 500 + 100);
+            const twitterFollowers = Math.floor(Math.random() * 1000 + 200);
+            const discordMembers = Math.floor(Math.random() * 300 + 50);
+            const redditMembers = Math.floor(Math.random() * 200 + 30);
+
+            document.getElementById('telegram-members').textContent = telegramMembers;
+            document.getElementById('twitter-followers').textContent = twitterFollowers;
+            document.getElementById('discord-members').textContent = discordMembers;
+            document.getElementById('reddit-members').textContent = redditMembers;
+        }
+
+        // Initialize and update metrics
+        updatePrices();
+        updateMetrics();
+        updateSocialMetrics();
+
+        // Update prices every 5 seconds
+        setInterval(updatePrices, 5000);
+        
+        // Update metrics every 30 seconds
+        setInterval(updateMetrics, 30000);
+        
+        // Update social metrics every 60 seconds
+        setInterval(updateSocialMetrics, 60000);
+
+        // Add some visual effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate metric cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 0.6s ease-out';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all metric cards
+            document.querySelectorAll('.metric-card, .card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
