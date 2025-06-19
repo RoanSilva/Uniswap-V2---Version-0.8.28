@@ -1,31 +1,73 @@
-# Uniswap V2 - Version 0.8.28 Completed Compile
+Uniswap V2 Atualizado — Solidity 0.8.28
+========================================
 
+Este repositório contém a versão atualizada dos contratos do protocolo Uniswap V2, compatível com a versão Solidity 0.8.28, com melhorias de segurança, otimizações e ajustes modernos de sintaxe.
 
-[![Actions Status](https://github.com/Uniswap/uniswap-v2-periphery/workflows/CI/badge.svg)](https://github.com/Uniswap/uniswap-v2-periphery/actions)
-[![npm](https://img.shields.io/npm/v/@uniswap/v2-periphery?style=flat-square)](https://npmjs.com/package/@uniswap/v2-periphery)
+Sobre
+-----
 
-In-depth documentation on Uniswap V2 is available at [uniswap.org](https://uniswap.org/docs).
+O Uniswap é um protocolo descentralizado para criação de liquidez automatizada (AMM - Automated Market Maker) na rede Ethereum. Esta versão foi baseada no repositório original da Uniswap V2 e adaptada para uso com o compilador Solidity ^0.8.0, especificamente 0.8.28.
 
-The built contract artifacts can be browsed via [unpkg.com](https://unpkg.com/browse/@uniswap/v2-periphery@latest/).
+Mudanças principais
+-------------------
 
-# Local Development
+- Compatibilidade com Solidity ^0.8.0, testado em 0.8.28
+- Atualização de visibilidades e eventos
+- Organização e limpeza geral do código
+- Preparação para testes modernos com Hardhat e Ethers.js
 
-The following assumes the use of `node@>=10`.
+Como usar
+---------
 
-## Install Dependencies
+1. Clone os repositórios:
 
-`yarn`
+   git clone https://github.com/Uniswap/v2-core.git
+   git clone https://github.com/Uniswap/v2-periphery.git
+   cd v2-core
+   cd v2-periphery
 
-`hardhat`
+2. Atualize pelos novos contratos compativeis com a versão Solidity 0.8.28
+   
+   git clone https://github.com/RoanSilva/Uniswap-V2---Version-0.8.28.git
+   cd v2-solidity 0.8.28
 
-## Compile Contracts
+3. Instale as dependências:
 
-`yarn compile` 
+   npm install
 
-`npx hardhat compile compile`
+4. Compile os contratos:
 
-## Run Tests
+   npx hardhat compile
 
-`yarn test` 
+5. Execute os testes:
 
-`npx hardhat test`
+   npx hardhat test
+
+6. Rode um nó local:
+
+   npx hardhat node
+
+Tecnologias utilizadas
+----------------------
+
+- Solidity 0.8.28
+- Hardhat
+- Ethers.js
+- Chai + Mocha (testes unitários)
+
+Segurança
+---------
+
+Este repositório é fornecido apenas para fins educacionais e testes locais/testnet. NÃO utilize em produção sem auditoria de segurança.
+
+Créditos
+--------
+
+Baseado no código original da equipe da Uniswap Labs.
+
+Links úteis
+-----------
+
+- Documentação Uniswap V2: https://docs.uniswap.org/protocol/V2/
+- Documentação Solidity: https://docs.soliditylang.org/
+- Documentação Hardhat: https://hardhat.org/docs
