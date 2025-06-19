@@ -22,31 +22,28 @@ Como usar
 1. Clone os repositórios:
 
    git clone https://github.com/Uniswap/v2-core.git   
-   git clone https://github.com/Uniswap/v2-periphery.git
-   
-   cd v2-core
-
+   git clone https://github.com/Uniswap/v2-periphery.git    
+   cd v2-core   
    cd v2-periphery
 
-3. Atualize pelos novos contratos compativeis com a versão Solidity 0.8.28
+2. Atualize pelos novos contratos compativeis com a versão Solidity 0.8.28
    
-   git clone https://github.com/RoanSilva/Uniswap-V2---Version-0.8.28.git
-
+   git clone https://github.com/RoanSilva/Uniswap-V2---Version-0.8.28.git   
    cd v2-solidity 0.8.28
 
-5. Instale as dependências:
+3. Instale as dependências:
 
    npm install
 
-6. Compile os contratos:
+4. Compile os contratos:
 
    npx hardhat compile
 
-7. Execute os testes:
+5. Execute os testes:
 
    npx hardhat test
 
-8. Rode um nó local:
+6. Rode um nó local:
 
    npx hardhat node
 
