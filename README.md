@@ -14,11 +14,14 @@ The following assumes the use of `node@>=10`.
 ## Install Dependencies
 
 `yarn`
+`hardhat`
 
 ## Compile Contracts
 
 `yarn compile`
+`npx hardhat compile compile`
 
 ## Run Tests
 
 `yarn test`
+`npx hardhat test`
